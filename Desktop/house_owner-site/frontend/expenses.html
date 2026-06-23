@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>All Expenses | House Building Tracker</title>
+
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<div class="app-layout">
+
+    <aside class="sidebar" id="sidebar">
+        <div class="brand">
+            <span>🏠</span>
+            <h2>BuildTrack</h2>
+        </div>
+
+        <nav class="side-nav">
+            <a href="dashboard.html">
+                <span>📊</span>
+                <b>Dashboard</b>
+            </a>
+
+            <a href="add-expense.html">
+                <span>➕</span>
+                <b>Add Expense</b>
+            </a>
+
+            <a href="expenses.html" class="active">
+                <span>📋</span>
+                <b>All Expenses</b>
+            </a>
+
+            <a href="stock.html" >
+                <span>📦</span>
+                <b>Material Stock</b>
+            </a>
+
+            <a href="contractors.html">
+                <span>👷</span>
+                <b>Contractors</b>
+            </a>
+
+            <a href="reports.html">
+                <span>📈</span>
+                <b>Reports</b>
+            </a>
+        </nav>
+    </aside>
+
+    <main class="main-content">
+
+        <header class="topbar">
+            <button class="menu-btn" id="menuBtn">☰</button>
+
+            <div>
+                <h1>All Expenses</h1>
+                <p>View, search, edit and delete expenses</p>
+            </div>
+
+            <button class="btn-logout" id="logoutBtn">Logout</button>
+        </header>
+
+        <section class="summary-grid">
+            <div class="summary-card orange">
+                <p>Total Expenses</p>
+                <h2 id="expenseTotal">₹0</h2>
+            </div>
+
+            <div class="summary-card green">
+                <p>Paid Amount</p>
+                <h2 id="expensePaid">₹0</h2>
+            </div>
+
+            <div class="summary-card red">
+                <p>Pending Amount</p>
+                <h2 id="expensePending">₹0</h2>
+            </div>
+
+            <div class="summary-card blue">
+                <p>Total Records</p>
+                <h2 id="expenseCount">0</h2>
+            </div>
+        </section>
+
+        <section class="page-card">
+            <div class="section-header">
+                <div>
+                    <h2>Expense Records</h2>
+                    <p>All saved house building expenses</p>
+                </div>
+
+                <a href="add-expense.html" class="btn-link">+ Add Expense</a>
+            </div>
+
+            <div class="table-tools">
+                <input type="text" id="searchExpense" placeholder="Search by category, vendor, Quantity">
+
+                <select id="filterCategory">
+                    <option value="All">All Categories</option>
+                    <option value="Cement">Cement</option>
+                    <option value="Steel">Steel</option>
+                    <option value="Bricks">Bricks</option>
+                    <option value="Sand">Sand</option>
+                    <option value="Labour">Labour</option>
+					<option value="Aggregates">Aggregates</option>
+                    <option value="Plumbing">Plumbing</option>
+                    <option value="Electrical">Electrical</option>
+                    <option value="Tiles">Tiles</option>
+                    <option value="Paint">Paint</option>
+                    <option value="Wood Work">Wood Work</option>
+                    <option value="Contractor">Contractor</option>
+                    <option value="Transport">Transport</option>
+                    <option value="Other">Other</option>
+                </select>
+
+                <select id="filterStatus">
+                    <option value="All">All Status</option>
+                    <option value="Paid">Paid</option>
+                    <option value="Pending">Pending</option>
+                </select>
+            </div>
+
+            <div class="table-wrapper">
+                <table>
+                    <thead>
+                    <tr>
+                        <th>Date</th>
+                        <th>Category</th>
+                        <th>Qty / Rate</th>
+                        <th>Amount</th>
+                        <th>Status</th>
+                        <th>Vendor</th>
+                        <th>Mode</th>
+                        <th>Actions</th>
+                    </tr>
+                    </thead>
+
+                    <tbody id="expenseTableBody"></tbody>
+                </table>
+            </div>
+
+            <div class="mobile-records" id="mobileExpenseCards"></div>
+
+            <div class="empty-state" id="expenseEmptyState">
+                <h3>No expense records found</h3>
+                <p>Add your first expense from the Add Expense page.</p>
+            </div>
+        </section>
+
+    </main>
+</div>
+
+<script src="js/app.js"></script>
+</body>
+</html>	
