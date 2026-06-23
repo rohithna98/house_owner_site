@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contractors | House Building Tracker</title>
+
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<div class="app-layout">
+
+    <aside class="sidebar" id="sidebar">
+        <div class="brand">
+            <span>🏠</span>
+            <h2>BuildTrack</h2>
+        </div>
+
+        <nav class="side-nav">
+            <a href="dashboard.html">
+                <span>📊</span>
+                <b>Dashboard</b>
+            </a>
+
+            <a href="add-expense.html">
+                <span>➕</span>
+                <b>Add Expense</b>
+            </a>
+
+            <a href="expenses.html">
+                <span>📋</span>
+                <b>All Expenses</b>
+            </a>
+
+            <a href="stock.html" >
+                <span>📦</span>
+                <b>Material Stock</b>
+            </a>
+
+            <a href="contractors.html" class="active">
+                <span>👷</span>
+                <b>Contractors</b>
+            </a>
+
+            <a href="reports.html">
+                <span>📈</span>
+                <b>Reports</b>
+            </a>
+        </nav>
+    </aside>
+
+    <main class="main-content">
+
+        <header class="topbar">
+            <button class="menu-btn" id="menuBtn">☰</button>
+
+            <div>
+                <h1>Contractors</h1>
+                <p>Manage contractor payments and work progress</p>
+            </div>
+
+            <button class="btn-logout" id="logoutBtn">Logout</button>
+        </header>
+
+        <section class="summary-grid">
+            <div class="summary-card orange">
+                <p>Total Contract Value</p>
+                <h2 id="contractTotalValue">₹0</h2>
+            </div>
+
+            <div class="summary-card green">
+                <p>Total Paid</p>
+                <h2 id="contractPaidValue">₹0</h2>
+            </div>
+
+            <div class="summary-card red">
+                <p>Total Balance</p>
+                <h2 id="contractBalanceValue">₹0</h2>
+            </div>
+
+            <div class="summary-card blue">
+                <p>Total Contractors</p>
+                <h2 id="contractTotalCount">0</h2>
+            </div>
+        </section>
+
+        <div class="contractor-layout">
+
+            <!-- CONTRACTOR FORM -->
+            <section class="page-card">
+                <h2 id="contractorFormTitle">Add Contractor</h2>
+                <p class="page-subtitle">Add contractor payment and work progress details</p>
+
+                <form id="contractorForm">
+                    <input type="hidden" id="contractorId">
+
+                    <div class="form-group">
+                        <label>Contractor Name</label>
+                        <input type="text" id="contractorName" placeholder="Example: Ramesh Mason" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Phone Number</label>
+                        <input type="tel" id="contractorPhone" placeholder="Example: 9876543210">
+                    </div>
+
+                    <div class="form-group">
+                        <label>Work Type</label>
+                        <select id="workType" required>
+                            <option value="">Select Work Type</option>
+                            <option value="Masonry">Masonry</option>
+                            <option value="Plumbing">Plumbing</option>
+                            <option value="Electrical">Electrical</option>
+                            <option value="Painting">Painting</option>
+                            <option value="Carpentry">Carpentry</option>
+                            <option value="Tiles Work">Tiles Work</option>
+                            <option value="Roofing">Roofing</option>
+                            <option value="POP / False Ceiling">POP / False Ceiling</option>
+                            <option value="Fabrication">Fabrication</option>
+                            <option value="Other">Other</option>
+                        </select>
+                    </div>
+
+                    <div class="quick-categories">
+                        <button type="button" onclick="quickContractorWork('Masonry')">Masonry</button>
+                        <button type="button" onclick="quickContractorWork('Plumbing')">Plumbing</button>
+                        <button type="button" onclick="quickContractorWork('Electrical')">Electrical</button>
+                        <button type="button" onclick="quickContractorWork('Painting')">Painting</button>
+                        <button type="button" onclick="quickContractorWork('Carpentry')">Carpentry</button>
+                        <button type="button" onclick="quickContractorWork('Tiles Work')">Tiles</button>
+                    </div>
+
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label>Total Contract Amount</label>
+                            <input type="number" id="contractAmount" placeholder="Example: 200000" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label>Paid Amount</label>
+                            <input type="number" id="contractPaidAmount" placeholder="Example: 50000" value="0" required>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Work Status</label>
+                        <select id="contractWorkStatus" required>
+                            <option value="Not Started">Not Started</option>
+                            <option value="In Progress">In Progress</option>
+                            <option value="Completed">Completed</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Start Date</label>
+                        <input type="date" id="contractStartDate">
+                    </div>
+
+                    <div class="form-group">
+                        <label>Notes</label>
+                        <textarea id="contractNotes" placeholder="Example: Ground floor masonry work"></textarea>
+                    </div>
+
+                    <button type="submit" class="btn-primary" id="saveContractorBtn">Save Contractor</button>
+                    <button type="button" class="btn-secondary-button" id="cancelContractorEditBtn">Cancel Update</button>
+                </form>
+            </section>
+
+            <!-- CONTRACTOR LIST -->
+            <section class="page-card">
+                <div class="section-header">
+                    <div>
+                        <h2>Contractor Records</h2>
+                        <p>Track payment balance and work progress</p>
+                    </div>
+                </div>
+
+                <div class="table-tools contractor-tools">
+                    <input type="text" id="searchContractor" placeholder="Search contractor, phone or work type">
+
+                    <select id="filterContractStatus">
+                        <option value="All">All Status</option>
+                        <option value="Not Started">Not Started</option>
+                        <option value="In Progress">In Progress</option>
+                        <option value="Completed">Completed</option>
+                    </select>
+                </div>
+
+                <div class="table-wrapper">
+                    <table>
+                        <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>Work</th>
+                            <th>Total</th>
+                            <th>Paid</th>
+                            <th>Balance</th>
+                            <th>Status</th>
+                            <th>Phone</th>
+                            <th>Actions</th>
+                        </tr>
+                        </thead>
+
+                        <tbody id="contractorTableBody"></tbody>
+                    </table>
+                </div>
+
+                <div class="mobile-records" id="mobileContractorCards"></div>
+
+                <div class="empty-state" id="contractorEmptyState">
+                    <h3>No contractor records found</h3>
+                    <p>Add your first contractor from the form.</p>
+                </div>
+            </section>
+
+        </div>
+
+    </main>
+</div>
+
+<script src="js/app.js"></script>
+</body>
+</html>

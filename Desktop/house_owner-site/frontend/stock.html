@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Material Stock | House Building Tracker</title>
+
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<div class="app-layout">
+
+    <aside class="sidebar" id="sidebar">
+        <div class="brand">
+            <span>🏠</span>
+            <h2>BuildTrack</h2>
+        </div>
+
+        <nav class="side-nav">
+            <a href="dashboard.html">
+                <span>📊</span>
+                <b>Dashboard</b>
+            </a>
+
+            <a href="add-expense.html">
+                <span>➕</span>
+                <b>Add Expense</b>
+            </a>
+
+            <a href="expenses.html">
+                <span>📋</span>
+                <b>All Expenses</b>
+            </a>
+
+            <a href="stock.html" class="active">
+                <span>📦</span>
+                <b>Material Stock</b>
+            </a>
+
+            <a href="contractors.html">
+                <span>👷</span>
+                <b>Contractors</b>
+            </a>
+
+            <a href="reports.html">
+                <span>📈</span>
+                <b>Reports</b>
+            </a>
+        </nav>
+    </aside>
+
+    <main class="main-content">
+
+        <header class="topbar">
+            <button class="menu-btn" id="menuBtn">☰</button>
+
+            <div>
+                <h1>Material Stock</h1>
+                <p>Track available and used construction materials</p>
+            </div>
+
+            <button class="btn-logout" id="logoutBtn">Logout</button>
+        </header>
+
+        <section class="summary-grid">
+            <div class="summary-card orange">
+                <p>Total Materials</p>
+                <h2 id="stockTotalItems">0</h2>
+            </div>
+
+            <div class="summary-card green">
+                <p>Available Stock</p>
+                <h2 id="stockAvailableItems">0</h2>
+            </div>
+
+            <div class="summary-card red">
+                <p>Low Stock Items</p>
+                <h2 id="stockLowItems">0</h2>
+            </div>
+
+            <div class="summary-card blue">
+                <p>Used Materials</p>
+                <h2 id="stockUsedItems">0</h2>
+            </div>
+        </section>
+
+        <div class="stock-layout">
+
+            <!-- STOCK FORM -->
+            <section class="page-card">
+                <h2 id="stockFormTitle">Add Material Stock</h2>
+                <p class="page-subtitle">Add cement, steel, sand, bricks, tiles or any material</p>
+
+                <form id="stockForm">
+                    <input type="hidden" id="stockId">
+
+                    <div class="form-group">
+                        <label>Material Name</label>
+                        <select id="materialName" required>
+                            <option value="">Select Material</option>
+                            <option value="Cement">Cement</option>
+                            <option value="Steel">Steel</option>
+                            <option value="Bricks">Bricks</option>
+                            <option value="Sand">Sand</option>
+                            <option value="Aggregates">Aggregates</option>
+                            <option value="Plumbing">Plumbing</option>
+                            <option value="Electrical">Electrical</option>
+                            <option value="Tiles">Tiles</option>
+                            <option value="Paint">Paint</option>
+                            <option value="Wood Work">Wood Work</option>
+                            <option value="Other">Other</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Unit</label>
+                        <select id="materialUnit" required>
+                            <option value="">Select Unit</option>
+                            <option value="Bags">Bags</option>
+                            <option value="Tons">Tons</option>
+                            <option value="Kg">Kg</option>
+                            <option value="Loads">Loads</option>
+                            <option value="Pieces">Pieces</option>
+                            <option value="Boxes">Boxes</option>
+                            <option value="Litres">Litres</option>
+                            <option value="Sq.ft">Sq.ft</option>
+                            <option value="Bundles">Bundles</option>
+                        </select>
+                </div>
+
+                    <div class="quick-categories">
+                        <button type="button" onclick="quickMaterial('Cement', 'Bags')">Cement</button>
+                        <button type="button" onclick="quickMaterial('Steel', 'Tons')">Steel</button>
+                        <button type="button" onclick="quickMaterial('Sand', 'Loads')">Sand</button>
+                        <button type="button" onclick="quickMaterial('Aggregates', 'Loads')">Aggregates</button>
+                        <button type="button" onclick="quickMaterial('Bricks', 'Pieces')">Bricks</button>
+                        <button type="button" onclick="quickMaterial('Tiles', 'Boxes')">Tiles</button>
+                        <button type="button" onclick="quickMaterial('Paint', 'Litres')">Paint</button>
+                    </div>
+
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label>Total Quantity</label>
+                            <input type="number" id="totalQuantity" placeholder="Example: 100" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label>Used Quantity</label>
+                            <input type="number" id="usedQuantity" placeholder="Example: 20" value="0" required>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Low Stock Alert Quantity</label>
+                        <input type="number" id="lowStockLimit" placeholder="Example: 10" value="10" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Supplier / Shop Name</label>
+                        <input type="text" id="supplierName" placeholder="Example: Ramesh Cement Store">
+                    </div>
+
+                    <div class="form-group">
+                        <label>Notes</label>
+                        <textarea id="stockNotes" placeholder="Optional notes"></textarea>
+                    </div>
+
+                    <button type="submit" class="btn-primary" id="saveStockBtn">Save Stock</button>
+                    <button type="button" class="btn-secondary-button" id="cancelStockEditBtn">Cancel Update</button>
+                </form>
+            </section>
+
+            <!-- STOCK LIST -->
+            <section class="page-card">
+                <div class="section-header">
+                    <div>
+                        <h2>Stock Records</h2>
+                        <p>Manage available and used construction material</p>
+                    </div>
+                </div>
+
+                <div class="table-tools stock-tools">
+                    <input type="text" id="searchStock" placeholder="Search material or supplier">
+                </div>
+
+                <div class="table-wrapper">
+                    <table>
+                        <thead>
+                        <tr>
+                            <th>Material</th>
+                            <th>Total</th>
+                            <th>Used</th>
+                            <th>Available</th>
+                            <th>Status</th>
+                            <th>Supplier</th>
+                            <th>Actions</th>
+                        </tr>
+                        </thead>
+
+                        <tbody id="stockTableBody"></tbody>
+                    </table>
+                </div>
+
+                <div class="mobile-records" id="mobileStockCards"></div>
+
+                <div class="empty-state" id="stockEmptyState">
+                    <h3>No material stock found</h3>
+                    <p>Add your first material stock from the form.</p>
+                </div>
+            </section>
+
+        </div>
+
+    </main>
+</div>
+
+<script src="js/app.js"></script>
+</body>
+</html>

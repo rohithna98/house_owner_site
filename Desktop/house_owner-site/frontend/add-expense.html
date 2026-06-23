@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add Expense | House Building Tracker</title>
+
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<div class="app-layout">
+
+    <aside class="sidebar" id="sidebar">
+        <div class="brand">
+            <span>🏠</span>
+            <h2>BuildTrack</h2>
+        </div>
+
+        <nav class="side-nav">
+            <a href="dashboard.html">
+                <span>📊</span>
+                <b>Dashboard</b>
+            </a>
+
+            <a href="add-expense.html" class="active">
+                <span>➕</span>
+                <b>Add Expense</b>
+            </a>
+
+            <a href="expenses.html">
+                <span>📋</span>
+                <b>All Expenses</b>
+            </a>
+
+            <a href="stock.html" >
+                <span>📦</span>
+                <b>Material Stock</b>
+            </a>
+
+            <a href="contractors.html">
+                <span>👷</span>
+                <b>Contractors</b>
+            </a>
+
+            <a href="reports.html">
+                <span>📈</span>
+                <b>Reports</b>
+            </a>
+        </nav>
+    </aside>
+
+    <main class="main-content">
+
+        <header class="topbar">
+            <button class="menu-btn" id="menuBtn">☰</button>
+
+            <div>
+                <h1 id="pageTitle">Add Expense</h1>
+                <p id="pageSubtitle">Add new house building expense</p>
+            </div>
+
+            <button class="btn-logout" id="logoutBtn">Logout</button>
+        </header>
+
+        <section class="page-card form-width">
+            <h2 id="formTitle">Add New Expense</h2>
+            <p class="page-subtitle">Enter material, labour or contractor payment details</p>
+
+            <form id="expenseForm">
+                <input type="hidden" id="expenseId">
+
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label>Date</label>
+                        <input type="date" id="expenseDate" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Category</label>
+                        <select id="category" required>
+                            <option value="">Select Category</option>
+                            <option value="Cement">Cement</option>
+                            <option value="Steel">Steel</option>
+                            <option value="Bricks">Bricks</option>
+                            <option value="Sand">Sand</option>
+							<option value="Aggregates">Aggregates</option>
+                            <option value="Labour">Labour</option>
+                            <option value="Plumbing">Plumbing</option>
+                            <option value="Electrical">Electrical</option>
+                            <option value="Tiles">Tiles</option>
+                            <option value="Paint">Paint</option>
+                            <option value="Wood Work">Wood Work</option>
+                            <option value="Contractor">Contractor</option>
+                            <option value="Transport">Transport</option>
+                            <option value="Other">Other</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="quick-categories">
+                    <button type="button" onclick="setExpenseCategory('Cement')">Cement</button>
+                    <button type="button" onclick="setExpenseCategory('Steel')">Steel</button>
+                    <button type="button" onclick="setExpenseCategory('Sand')">Sand</button>
+                    <button type="button" onclick="setExpenseCategory('Labour')">Labour</button>
+                    <button type="button" onclick="setExpenseCategory('Electrical')">Electrical</button>
+                    <button type="button" onclick="setExpenseCategory('Plumbing')">Plumbing</button>
+                </div>
+
+                <div class="form-grid">
+    <div class="form-group">
+        <label>Quantity</label>
+        <input
+            type="number"
+            id="quantity"
+            placeholder="Example: 20"
+            min="0"
+            step="0.01"
+            required
+        >
+    </div>
+
+    <div class="form-group">
+        <label>Unit</label>
+        <select id="unit" required>
+            <option value="">Select Unit</option>
+            <option value="Bags">Bags</option>
+            <option value="Tons">Tons</option>
+            <option value="Kgs">Kgs</option>
+            <option value="Loads">Loads</option>
+            <option value="CFT">CFT</option>
+            <option value="Sqft">Sqft</option>
+            <option value="Pieces">Pieces</option>
+            <option value="Days">Days</option>
+            <option value="Hours">Hours</option>
+            <option value="Lumpsum">Lumpsum</option>
+        </select>
+    </div>
+</div>
+
+<div class="form-grid">
+    <div class="form-group">
+        <label>Rate</label>
+        <input
+            type="number"
+            id="rate"
+            placeholder="Example: 420"
+            min="0"
+            step="0.01"
+            required
+        >
+    </div>
+
+    <div class="form-group">
+        <label>Amount</label>
+        <input
+            type="number"
+            id="amount"
+            placeholder="Auto calculated, editable"
+            min="0"
+            step="0.01"
+            required
+        >
+        <small class="field-hint">Auto calculated from quantity × rate. You can edit it manually.</small>
+    </div>
+</div>
+                
+                    <div class="form-grid">
+    <div class="form-group">
+        <label>Payment Status</label>
+        <select id="status" required>
+            <option value="Paid">Paid</option>
+            <option value="Pending">Pending</option>
+        </select>
+    </div>
+
+    <div class="form-group">
+        <label>Vendor / Paid To</label>
+
+        <div class="suggestion-input">
+            <input
+                type="text"
+                id="vendor"
+                list="vendorList"
+                placeholder="Type or select vendor name"
+            >
+            <span>⌄</span>
+        </div>
+
+        <datalist id="vendorList"></datalist>
+    </div>
+</div>
+
+<div class="form-group">
+    <label>Payment Mode</label>
+    <select id="paymentMode">
+        <option value="Cash">Cash</option>
+        <option value="UPI">UPI</option>
+        <option value="Bank Transfer">Bank Transfer</option>
+        <option value="Cheque">Cheque</option>
+        <option value="Other">Other</option>
+    </select>
+</div>
+
+                <div class="form-group">
+                    <label>Notes</label>
+                    <textarea id="notes" placeholder="Optional notes"></textarea>
+                </div>
+
+                <button type="submit" class="btn-primary" id="saveExpenseBtn">Save Expense</button>
+
+                <a href="expenses.html" class="btn-secondary-link">View All Expenses</a>
+            </form>
+        </section>
+
+    </main>
+</div>
+
+<script src="js/app.js"></script>
+</body>
+</html>

@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reports | House Building Tracker</title>
+
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<div class="app-layout">
+
+    <aside class="sidebar" id="sidebar">
+        <div class="brand">
+            <span>🏠</span>
+            <h2>BuildTrack</h2>
+        </div>
+
+        <nav class="side-nav">
+            <a href="dashboard.html">
+                <span>📊</span>
+                <b>Dashboard</b>
+            </a>
+
+            <a href="add-expense.html">
+                <span>➕</span>
+                <b>Add Expense</b>
+            </a>
+
+            <a href="expenses.html">
+                <span>📋</span>
+                <b>All Expenses</b>
+            </a>
+
+            <a href="stock.html">
+                <span>📦</span>
+                <b>Material Stock</b>
+            </a>
+
+            <a href="contractors.html">
+                <span>👷</span>
+                <b>Contractors</b>
+            </a>
+
+            <a href="reports.html" class="active">
+                <span>📈</span>
+                <b>Reports</b>
+            </a>
+        </nav>
+    </aside>
+
+    <main class="main-content">
+
+        <header class="topbar no-print">
+            <button class="menu-btn" id="menuBtn">☰</button>
+
+            <div>
+                <h1>Reports</h1>
+                <p>View complete house building summary</p>
+            </div>
+
+            <button class="btn-logout" id="logoutBtn">Logout</button>
+        </header>
+
+        <section class="page-card no-print">
+            <div class="section-header">
+                <div>
+                    <h2>Filter Report by Date</h2>
+                    <p>Select date range to view expense report</p>
+                </div>
+            </div>
+
+        <div class="report-filter-grid">
+            <div class="form-group">
+                <label>From Date</label>
+                <input type="date" id="reportFromDate">
+            </div>
+
+            <div class="form-group">
+                <label>To Date</label>
+                <input type="date" id="reportToDate">
+            </div>
+
+            <div class="report-filter-actions">
+                <button type="button" class="btn-primary" onclick="applyReportDateFilter()">
+                    Apply Filter
+                </button>
+
+                <button type="button" class="btn-secondary-button" onclick="clearReportDateFilter()">
+                    Clear
+                </button>
+            </div>
+        </div>
+    </section>
+
+        <section class="report-header-card">
+            <div>
+                <h2>House Building Report</h2>
+                <p id="reportDate">Generated report</p>
+            </div>
+
+            <button class="btn-print no-print" onclick="printReport()">Print Report</button>
+        </section>
+
+        <section class="summary-grid">
+            <div class="summary-card orange">
+                <p>Total Expenses</p>
+                <h2 id="reportTotalExpenses">₹0</h2>
+            </div>
+
+            <div class="summary-card green">
+                <p>Total Paid</p>
+                <h2 id="reportPaidExpenses">₹0</h2>
+            </div>
+
+            <div class="summary-card red">
+                <p>Total Pending</p>
+                <h2 id="reportPendingExpenses">₹0</h2>
+            </div>
+
+            <div class="summary-card blue">
+                <p>Total Records</p>
+                <h2 id="reportExpenseCount">0</h2>
+            </div>
+        </section>
+
+        <div class="reports-grid">
+          <section class="page-card">
+                <div class="section-header">
+                    <div>
+                        <h2>Category-wise Expenses</h2>
+                        <p>How much amount spent for each category</p>
+                    </div>
+                </div>
+
+                <div id="categoryReportList" class="report-list"></div>
+
+                <div class="empty-state" id="categoryReportEmpty">
+                    <h3>No expense data</h3>
+                    <p>Add expenses to see category-wise report.</p>
+                </div>
+            </section>
+
+            <section class="page-card">
+                <div class="section-header">
+                    <div>
+                        <h2>Monthly Expense Summary</h2>
+                        <p>Month-wise total spending from expenses</p>
+                    </div>
+                </div>
+
+                <div id="monthlyReportList" class="mini-list"></div>
+
+                <div class="empty-state" id="monthlyReportEmpty">
+                    <h3>No monthly data</h3>
+                    <p>Add expenses to see month-wise report.</p>
+                </div>
+            </section>
+
+            <section class="page-card">
+                <div class="section-header">
+                    <div>
+                        <h2>Payment Summary</h2>
+                        <p>Total paid and pending amount including vendors and contractors</p>
+                    </div>
+                </div>
+
+                <div class="payment-report-box">
+                    <div class="payment-row">
+                        <span>Total Paid</span>
+                        <strong id="paymentPaidAmount">₹0</strong>
+                    </div>
+
+                    <div class="payment-row">
+                        <span>Total Pending</span>
+                        <strong id="paymentPendingAmount">₹0</strong>
+                    </div>
+
+                    <div class="payment-row total-row">
+                        <span>Total Project Value</span>
+                        <strong id="paymentTotalAmount">₹0</strong>
+                    </div>
+                </div>
+            </section>
+
+            <section class="page-card">
+                <div class="section-header">
+                    <div>
+                        <h2>Top Vendors / Suppliers</h2>
+                        <p>Highest spending by vendor or paid-to name</p>
+                    </div>
+                </div>
+
+                <div id="vendorReportList" class="mini-list"></div>
+
+                <div class="empty-state" id="vendorReportEmpty">
+                    <h3>No vendor data</h3>
+                    <p>Add vendor name in expenses to see this report.</p>
+                </div>
+            </section>
+
+            <section class="page-card">
+                <div class="section-header">
+                    <div>
+                        <h2>Contractor Summary</h2>
+                        <p>Total contract value, paid and balance</p>
+                    </div>
+                </div>
+
+                <div class="payment-report-box">
+                    <div class="payment-row">
+                        <span>Total Contract Value</span>
+                        <strong id="reportContractTotal">₹0</strong>
+                    </div>
+
+                    <div class="payment-row">
+                        <span>Contractor Paid</span>
+                        <strong id="reportContractPaid">₹0</strong>
+                    </div>
+
+                    <div class="payment-row total-row">
+                        <span>Contractor Balance</span>
+                        <strong id="reportContractBalance">₹0</strong>
+                    </div>
+                </div>
+
+                <div id="contractorBalanceList" class="mini-list"></div>
+            </section>
+
+            <section class="page-card">
+                <div class="section-header">
+                    <div>
+                        <h2>Low Stock Warning</h2>
+                        <p>Materials that need attention</p>
+                    </div>
+                </div>
+
+                <div id="lowStockReportList" class="mini-list"></div>
+
+                <div class="empty-state" id="lowStockReportEmpty">
+                    <h3>No low stock items</h3>
+                    <p>All materials are currently available.</p>
+                </div>
+            </section>
+
+        </div>
+
+    </main>
+</div>
+
+<script src="js/app.js"></script>
+</body>
+</html>
