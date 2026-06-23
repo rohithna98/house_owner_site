@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard | House Building Tracker</title>
+
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<div class="app-layout">
+
+    <aside class="sidebar" id="sidebar">
+        <div class="brand">
+            <span>🏠</span>
+            <h2>BuildTrack</h2>
+        </div>
+
+        <nav class="side-nav">
+            <a href="dashboard.html" class="active">
+                <span>📊</span>
+                <b>Dashboard</b>
+            </a>
+
+            <a href="add-expense.html">
+                <span>➕</span>
+                <b>Add Expense</b>
+            </a>
+
+            <a href="expenses.html">
+                <span>📋</span>
+                <b>All Expenses</b>
+            </a>
+
+            <a href="stock.html" >
+                <span>📦</span>
+                <b>Material Stock</b>
+            </a>
+
+            <a href="contractors.html">
+                <span>👷</span>
+                <b>Contractors</b>
+            </a>
+
+            <a href="reports.html">
+                <span>📈</span>
+                <b>Reports</b>
+            </a>
+        </nav>
+    </aside>
+
+    <main class="main-content">
+
+        <header class="topbar">
+            <button class="menu-btn" id="menuBtn">☰</button>
+
+            <div>
+                <h1>Dashboard</h1>
+                <p>Welcome back, Owner. Here is your house building summary.</p>
+            </div>
+
+            <button class="btn-logout" id="logoutBtn">Logout</button>
+        </header>
+
+        <!-- MAIN EXPENSE SUMMARY -->
+        <section class="summary-grid">
+            <div class="summary-card orange">
+                <p>Total Expenses</p>
+                <h2 id="dashboardTotalExpenses">₹0</h2>
+            </div>
+
+            <div class="summary-card green">
+                <p>Paid Amount</p>
+                <h2 id="dashboardPaidAmount">₹0</h2>
+            </div>
+
+            <div class="summary-card red">
+                <p>Pending Amount</p>
+                <h2 id="dashboardPendingAmount">₹0</h2>
+            </div>
+
+            <div class="summary-card blue">
+                <p>Total Records</p>
+                <h2 id="dashboardTotalRecords">0</h2>
+            </div>
+        </section>
+
+        <!-- MODULE SUMMARY -->
+        <section class="dashboard-module-grid">
+
+            <div class="dashboard-mini-card">
+                <div>
+                    <span class="mini-icon">🧱</span>
+                </div>
+
+                <div>
+                    <p>Material Items</p>
+                    <h3 id="dashboardStockItems">0</h3>
+                    <small id="dashboardLowStockText">0 low stock items</small>
+                </div>
+            </div>
+
+            <div class="dashboard-mini-card">
+                <div>
+                    <span class="mini-icon">👷</span>
+                </div>
+
+                <div>
+                    <p>Contractors</p>
+                    <h3 id="dashboardContractors">0</h3>
+                    <small id="dashboardContractBalance">₹0 balance pending</small>
+                </div>
+            </div>
+
+            <div class="dashboard-mini-card">
+                <div>
+                    <span class="mini-icon">📊</span>
+                </div>
+
+                <div>
+                    <p>Most Spent Category</p>
+                    <h3 id="dashboardTopCategory">-</h3>
+                    <small id="dashboardTopCategoryAmount">₹0</small>
+                </div>
+            </div>
+
+        </section>
+
+        <!-- QUICK ACTIONS -->
+        <section class="page-card">
+            <div class="section-header">
+                <div>
+                    <h2>Quick Actions</h2>
+                    <p>Start managing your house construction work</p>
+                </div>
+            </div>
+
+            <div class="quick-actions">
+                <a href="add-expense.html" class="quick-card">
+                    <span>➕</span>
+                    <h3>Add Expense</h3>
+                    <p>Add material, labour or contractor expense</p>
+                </a>
+
+                <a href="expenses.html" class="quick-card">
+                    <span>📋</span>
+                    <h3>View Expenses</h3>
+                    <p>Search, update or delete expense records</p>
+                </a>
+
+                <a href="stock.html" class="quick-card">
+                    <span>🧱</span>
+                    <h3>Material Stock</h3>
+                    <p>Track cement, steel, sand, bricks and tiles</p>
+                </a>
+
+                <a href="contractors.html" class="quick-card">
+                    <span>👷</span>
+                    <h3>Contractors</h3>
+                    <p>Track contractor payments and work status</p>
+                </a>
+            </div>
+        </section>
+
+        <!-- DASHBOARD DETAILS -->
+        <section class="dashboard-details-grid">
+
+            <!-- RECENT EXPENSES -->
+            <div class="page-card">
+                <div class="section-header">
+                    <div>
+                        <h2>Recent Expenses</h2>
+                        <p>Latest 5 expense records</p>
+                    </div>
+
+                    <a href="expenses.html" class="small-link">View All</a>
+                </div>
+
+                <div id="dashboardRecentExpenses" class="dashboard-list"></div>
+
+                <div class="empty-state small-empty" id="dashboardRecentEmpty">
+                    <h3>No expenses yet</h3>
+                    <p>Add your first expense to see it here.</p>
+                </div>
+            </div>
+
+            <!-- LOW STOCK ALERTS -->
+            <div class="page-card">
+                <div class="section-header">
+                    <div>
+                        <h2>Low Stock Alerts</h2>
+                        <p>Materials that need attention</p>
+                    </div>
+
+                    <a href="stock.html" class="small-link">Open Stock</a>
+                </div>
+
+                <div id="dashboardLowStockList" class="dashboard-list"></div>
+
+                <div class="empty-state small-empty" id="dashboardLowStockEmpty">
+                    <h3>No low stock</h3>
+                    <p>All materials are currently available.</p>
+                </div>
+            </div>
+
+            <!-- CONTRACTOR BALANCE -->
+            <div class="page-card">
+                <div class="section-header">
+                    <div>
+                        <h2>Contractor Balances</h2>
+                        <p>Pending contractor payments</p>
+                    </div>
+
+                    <a href="contractors.html" class="small-link">Open Contractors</a>
+                </div>
+
+                <div id="dashboardContractorBalanceList" class="dashboard-list"></div>
+
+                <div class="empty-state small-empty" id="dashboardContractorEmpty">
+                    <h3>No pending balance</h3>
+                    <p>Contractor pending balances will appear here.</p>
+                </div>
+            </div>
+
+            <!-- PROJECT HEALTH -->
+            <div class="page-card">
+                <div class="section-header">
+                    <div>
+                        <h2>Project Health</h2>
+                        <p>Simple alerts from your saved data</p>
+                    </div>
+                </div>
+
+                <div class="health-list">
+                    <div class="health-item">
+                        <span>💰</span>
+                        <div>
+                            <h4>Pending Expenses</h4>
+                            <p id="healthPendingExpenses">₹0 pending</p>
+                        </div>
+                    </div>
+
+                    <div class="health-item">
+                        <span>🧱</span>
+                        <div>
+                            <h4>Material Alerts</h4>
+                            <p id="healthLowStock">0 items need attention</p>
+                        </div>
+                    </div>
+
+                    <div class="health-item">
+                        <span>👷</span>
+                        <div>
+                            <h4>Contractor Payments</h4>
+                            <p id="healthContractorBalance">₹0 balance pending</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </section>
+
+    </main>
+</div>
+
+<script src="js/app.js"></script>
+</body>
+</html>
